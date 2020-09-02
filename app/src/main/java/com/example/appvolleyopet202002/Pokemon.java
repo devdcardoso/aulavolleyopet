@@ -6,9 +6,11 @@ import java.util.List;
 public class Pokemon {
     private String nome;
     private List<String> ataques;
+    private List<String> tipos;
 
     public Pokemon(){
         this.ataques = new ArrayList<>();
+        this.tipos = new ArrayList<>();
     }
 
     public Pokemon(String nome, List<String> ataques) {
@@ -18,6 +20,10 @@ public class Pokemon {
 
     public void addAtaque(String nome){
         this.ataques.add(nome);
+    }
+
+    public void addTipo(String nome){
+        this.tipos.add(nome);
     }
 
     public int totalAtaques(){
@@ -45,6 +51,7 @@ public class Pokemon {
         return "Pokemon:\n" +
                 "nome = " + nome + "\n" +
                 "Total de ataques disponíveis = " + totalAtaques() + "\n" +
-                "Ataques: " + ataques;
+                //"Ataques: " + ataques + "\n" +
+                "Tipos: " + tipos;
     }
 }
