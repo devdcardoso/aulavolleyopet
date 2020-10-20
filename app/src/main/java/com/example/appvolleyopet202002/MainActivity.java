@@ -120,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },
                 new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        textResultado.setText(error.getMessage());
-                    }
-                }
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                textResultado.setText(error.getMessage());
+            }
+        }
         ){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -135,6 +135,149 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         request.setRetryPolicy(new DefaultRetryPolicy( 5000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+    }
+
+    public void solicitarDadoAPI(View view) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8000/series/";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        textResultado.setText(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        textResultado.setText(error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("X-Api-Key","T5COKZWx.7SJccJaTaday1vfuUPIIK8nbIlbUk2QH");
+
+                return params;
+            }
+        };
+
+        queue.add(request);
+    }
+
+    public void enviarDadosAPI(View view) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8000/series/";
+
+        JSONObject serieObject = new JSONObject();
+        try {
+            serieObject.put("serie_titulo", "HOUSE M.D");
+            serieObject.put("serie_temporadas", 8);
+            serieObject.put("serie_genero", "Drama");
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                url,
+                serieObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        textResultado.setText(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        textResultado.setText(error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("X-Api-Key","T5COKZWx.7SJccJaTaday1vfuUPIIK8nbIlbUk2QH");
+
+                return params;
+            }
+        };
+
+        queue.add(request);
+    }
+
+    public void atualizarDadosAPI(View view) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8000/series/7/";
+
+        JSONObject serieObject = new JSONObject();
+        try {
+            serieObject.put("serie_temporadas", 2);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH,
+                url,
+                serieObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        textResultado.setText(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        textResultado.setText(error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("X-Api-Key","T5COKZWx.7SJccJaTaday1vfuUPIIK8nbIlbUk2QH");
+
+                return params;
+            }
+        };
+
+        queue.add(request);
+    }
+
+    public void removerDadosAPI(View view) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8000/series/12/";
+
+        StringRequest request = new StringRequest(Request.Method.DELETE,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        textResultado.setText("Serie Removida!");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        textResultado.setText(error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("X-Api-Key","T5COKZWx.7SJccJaTaday1vfuUPIIK8nbIlbUk2QH");
+
+                return params;
+            }
+        };
+
         queue.add(request);
     }
 }
